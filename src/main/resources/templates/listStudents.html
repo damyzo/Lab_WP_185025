@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <title>Add new Student to Course</title>
@@ -38,12 +38,17 @@
 <section>
     <h2>Select the student to enroll:</h2>
     <a href='/createStudent' type='button'>Create New Student</a> <br/> <br/>
-    <input name="size" type="radio" value="petar.petrov"> Петар Петров <br/>
-    <input name="size" type="radio" value="mile.milev"> Миле Милев <br/>
-    <input name="size" type="radio" value="gjorgji.gjorgjiev"> Ѓорѓи Ѓорѓиев <br/>
-    <br/>
 
-    <a href="/StudentEnrollmentSummary">Submit</a>
+    <form th:method="POST" th:action="@{/AddStudent}">
+        <ul>
+            <li style="list-style: none;" th:each="student: ${students}">
+                <input type="radio" name="size" th:value="${student.getUsername()}"/>
+                <label th:text="${student.getUsername()}"> </label>
+
+            </li>
+        </ul>
+        <input type="submit" value="Submit"/>
+    </form>
 </section>
 <aside>
     <table>
@@ -54,7 +59,7 @@
         </tr>
         <tr>
             <td><b>Course Id</b></td>
-            <td>2</td>
+            <td th:text="${courseId}"></td>
         </tr>
     </table>
 </aside>

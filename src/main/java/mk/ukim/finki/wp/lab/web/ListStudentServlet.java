@@ -28,12 +28,19 @@ public class ListStudentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         WebContext context = new WebContext(req,resp,req.getServletContext());
-        Object courseId = req.getSession().getAttribute("courseId");
+
+        context.setVariable("students",studentService.listAll());
+        Object studentId = req.getSession().getAttribute("courseSelected");
+        context.setVariable("courseId", studentId);
         templateEngine.process("listStudents.html",context,resp.getWriter());
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        String username = req.getParameter("size");
+        Object id = req.getSession().getAttribute("courseSelected");
+        String courseName = courseService.addStudentInCourse(username, Long.valueOf((id.toString()))).getName();
+        req.getSession().setAttribute("courseName", courseName);
+        resp.sendRedirect("/StudentEnrollmentSummary");
     }
 }

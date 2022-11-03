@@ -30,7 +30,7 @@ public class CourseRepository {
     public Course addStudentToCourse(Student student, Course course){
 
         if(DataHolder.courses.contains(course)){
-            if(student!=null)
+            if(student!=null && !DataHolder.courses.get(DataHolder.courses.indexOf(course)).getStudents().contains(student))
             {
                 DataHolder.courses.get(DataHolder.courses.indexOf(course)).getStudents().add(student);
             }

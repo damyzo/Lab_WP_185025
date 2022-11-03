@@ -24,11 +24,11 @@ public class DataHolder {
         studentList.add(new Student("student4","password4","Student","Fourth"));
         studentList.add(new Student("student5","password5","Student","Fifth"));
 
-        courses.add(new Course(0L,"Web Programming","Web Programming desc",new ArrayList<>(studentList)));
-        courses.add(new Course(1L,"Data Science","Dataaaa!",new ArrayList<>(studentList)));
-        courses.add(new Course(2L,"Web Design","UX/UI",new ArrayList<>(studentList)));
-        courses.add(new Course(3L,"Mobile Development","Mobile games!",new ArrayList<>(studentList)));
-        courses.add(new Course(4L,"Calculus","Math is fun :D",new ArrayList<>(studentList)));
+        courses.add(new Course(0L,"Web Programming","Web Programming desc",new ArrayList<>()));
+        courses.add(new Course(1L,"Data Science","Dataaaa!",new ArrayList<>()));
+        courses.add(new Course(2L,"Web Design","UX/UI",new ArrayList<>()));
+        courses.add(new Course(3L,"Mobile Development","Mobile games!",new ArrayList<>()));
+        courses.add(new Course(4L,"Calculus","Math is fun :D",new ArrayList<>()));
 
     }
 }

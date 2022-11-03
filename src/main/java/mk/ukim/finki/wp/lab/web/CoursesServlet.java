@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 @WebServlet(name = "list-courses", urlPatterns = "/listCourses")
@@ -31,10 +30,15 @@ public class CoursesServlet extends HttpServlet {
         WebContext context = new WebContext(req,resp, req.getServletContext());
         List<Course> cours = this.courseService.listAll();
         context.setVariable("coursesList",cours);
-        resp.setContentType("application/xhtml+xml");
-        String val = req.getParameter("courseId");
-        req.getSession().setAttribute("courseId", req.getParameter("courseId"));
+
         this.springTemplateEngine.process("listCourses.html",context,resp.getWriter());
+
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String courseId = req.getParameter("courseId");
+        req.getSession().setAttribute("courseSelected",courseId);
+        resp.sendRedirect("/AddStudent");
+    }
 }

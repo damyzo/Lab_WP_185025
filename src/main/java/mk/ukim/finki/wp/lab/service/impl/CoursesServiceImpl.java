@@ -40,6 +40,7 @@ public class CoursesServiceImpl implements CourseService {
             if (Objects.equals(student1.getUsername(), username))
             {
                 student = student1;
+                break;
             }
         }
 
