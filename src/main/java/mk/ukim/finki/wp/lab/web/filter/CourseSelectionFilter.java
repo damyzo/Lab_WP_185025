@@ -24,7 +24,6 @@ public class CourseSelectionFilter implements Filter {
         if(!Objects.equals(path, "/listCourses") && selection == null){
             response.sendRedirect("/listCourses");
         }else {
-            System.out.println(selection);
             filterChain.doFilter(servletRequest,servletResponse);
         }
     }
