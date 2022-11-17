@@ -2,6 +2,7 @@ package mk.ukim.finki.wp.lab.bootstrap;
 
 import mk.ukim.finki.wp.lab.model.Course;
 import mk.ukim.finki.wp.lab.model.Student;
+import mk.ukim.finki.wp.lab.model.Teacher;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -15,6 +16,7 @@ public class DataHolder {
     public static List<Course> courses = new ArrayList<>();
     public static List<Student> studentList = new ArrayList<>();
 
+    public static List<Teacher> teachers = new ArrayList<>();
 
     @PostConstruct
     public void init(){
@@ -30,5 +32,10 @@ public class DataHolder {
         courses.add(new Course("Mobile Development","Mobile games!",new ArrayList<>(), null));
         courses.add(new Course("Calculus","Math is fun :D",new ArrayList<>(), null));
 
+        teachers.add(new Teacher("Risto","Vrtev"));
+        teachers.add(new Teacher("Saso","Matic"));
+        teachers.add(new Teacher("Dimitar","Gjorgievski"));
+        teachers.add(new Teacher("Ana","Bekuta"));
+        teachers.add(new Teacher("Kosta","Kostic"));
     }
 }
