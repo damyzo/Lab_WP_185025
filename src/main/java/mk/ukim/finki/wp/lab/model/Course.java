@@ -9,8 +9,8 @@ public class Course {
     String description;
     List<Student> students;
 
-    public Course(Long courseId, String name, String description, List<Student> students) {
-        this.courseId = courseId;
+    public Course(String name, String description, List<Student> students) {
+        this.courseId = (long) (Math.random() * 1000);
         this.name = name;
         this.description = description;
         this.students = students;
