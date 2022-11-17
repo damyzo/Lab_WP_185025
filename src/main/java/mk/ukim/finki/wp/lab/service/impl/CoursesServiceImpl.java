@@ -2,11 +2,15 @@ package mk.ukim.finki.wp.lab.service.impl;
 
 import mk.ukim.finki.wp.lab.model.Course;
 import mk.ukim.finki.wp.lab.model.Student;
+import mk.ukim.finki.wp.lab.model.Teacher;
+import mk.ukim.finki.wp.lab.model.exception.CourseNameDescriptionAndTeacherNeededException;
+import mk.ukim.finki.wp.lab.model.exception.CourseNotFoundException;
 import mk.ukim.finki.wp.lab.repository.CourseRepository;
 import mk.ukim.finki.wp.lab.repository.StudentRepository;
 import mk.ukim.finki.wp.lab.service.CourseService;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,5 +50,36 @@ public class CoursesServiceImpl implements CourseService {
 
         courseRepository.addStudentToCourse(student,course);
         return course;
+    }
+
+    @Override
+    public Course save(String name, String desc, Teacher teacher) {
+        if(name != null && !name.isEmpty()
+                && desc != null && !desc.isEmpty()
+                && teacher != null)
+        {
+            return courseRepository.save(name,desc,teacher);
+        }
+        throw new CourseNameDescriptionAndTeacherNeededException();
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+        return courseRepository.deleteById(id);
+    }
+
+    @Override
+    public void sort() {
+        courseRepository.findAllCourses().sort(Comparator.comparing(Course::getName));
+    }
+
+    @Override
+    public Course findById(Long id) {
+        if(courseRepository.findById(id) != null)
+        {
+            return courseRepository.findById(id);
+
+        }
+        throw new CourseNotFoundException(id);
     }
 }

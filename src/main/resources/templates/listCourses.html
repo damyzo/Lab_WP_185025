@@ -1,8 +1,15 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head >
+  <link rel="stylesheet" href="/main.css" />
   <meta charset="utf-8"/>
   <title>Welcome and Choose a Course</title>
-  <style type="text/css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  <style>
     body {
       width: 800px;
       margin: auto;
@@ -15,17 +22,46 @@
 </header>
 <main>
   <h2>Choose course:</h2>
+<div class="container">
+  <div class="row">
+    <div>
+      <form th:method="POST" th:action="@{/listCourses}" >
+        <table class="table">
+          <thead>
+          <tr>
 
-    <form th:method="POST" th:action="@{/listCourses}">
-    <ul>
-      <li style="list-style: none;" th:each="course: ${coursesList}">
-        <input type="radio" name="courseId" th:value="${course.getCourseId()}"/>
-        <label th:text="${course.getName()}"> </label>
+            <td>Select</td>
+            <td>Course name</td>
+            <td>Teacher name</td>
+            <td>Course description</td>
+            <td>Delete Course</td>
+            <td>Edit Course</td>
 
-      </li>
-    </ul>
-    <input type="submit" value="Submit"/>
-    </form>
+          </tr>
+
+          </thead>
+          <tr th:each="course: ${coursesList}">
+
+
+            <td><input type="radio" name="courseId" th:value="${course.getCourseId()}"/></td>
+            <td><label th:text="${course.getName()}"> </label></td>
+            <td><label th:text="${course.getTeacher()}!=null?${course.getTeacher().getName()} + ' ' + ${course.getTeacher().getSurname()}:'No teacher'"> </label></td>
+            <td><label th:text="${course.getDescription()}"> </label></td>
+            <td><a th:href="@{'/courses/delete/{id}' (id = ${course.getCourseId()})}"  class="btn btn-danger">Delete</a></td>
+            <td><a th:href="@{'/courses/edit-form/{id}' (id = ${course.getCourseId()})}"  class="btn btn-primary">Edit</a></td>
+
+          </tr>
+        </table>
+        <input class="btn btn-md btn-primary" type="submit" value="Submit"/>
+      </form>
+      <p class="error"><th:block  th:if="${hasError}" th:text="${error}"></th:block></p>
+    </div>
+  </div>
+</div>
+<hr>
+  <h2>Button to add new Course</h2>
+  <a class="btn btn-lg btn-primary" th:href="@{'/courses/add-form'}">Add new Course</a>
+
 
 </main>
 </body>

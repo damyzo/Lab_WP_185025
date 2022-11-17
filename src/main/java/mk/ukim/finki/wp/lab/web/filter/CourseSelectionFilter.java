@@ -1,5 +1,6 @@
 package mk.ukim.finki.wp.lab.web.filter;
 
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -7,11 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
+
 @WebFilter(filterName = "CourseSelectionCheck", urlPatterns = "/*")
 public class CourseSelectionFilter implements Filter {
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        Filter.super.init(filterConfig);
+    public void init(FilterConfig filterConfig){
     }
 
     @Override
@@ -21,15 +22,26 @@ public class CourseSelectionFilter implements Filter {
 
         Object selection = request.getSession().getAttribute("courseSelected");
         String path = request.getServletPath();
-        if(!Objects.equals(path, "/listCourses") && selection == null){
-            response.sendRedirect("/listCourses");
+
+        if( !path.equals("/courses")
+                && !path.equals("/listCourses")
+                && !path.matches("/courses/delete/[0-9]*")
+                && !path.equals("/courses/add-form")
+                && !path.equals("/courses/add")
+                && !path.matches("/courses/edit-form/[0-9]*")
+                && selection == null){
+            response.sendRedirect("/courses");
         }else {
+            if(path.equals("/listCourses") && Objects.equals(request.getMethod(), "GET"))
+            {
+                response.sendRedirect("/courses");
+            }
             filterChain.doFilter(servletRequest,servletResponse);
         }
     }
 
     @Override
     public void destroy() {
-        Filter.super.destroy();
+
     }
 }

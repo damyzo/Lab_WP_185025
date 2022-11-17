@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface TeacherService {
     List<Teacher> findAll();
-    Teacher save(String name, String surname);
+    Teacher findById(Long id);
 
-    void deleteById(Long id);
 }

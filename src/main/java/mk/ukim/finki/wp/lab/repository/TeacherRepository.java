@@ -5,6 +5,7 @@ import mk.ukim.finki.wp.lab.model.Teacher;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -13,18 +14,8 @@ public class TeacherRepository {
         return DataHolder.teachers;
     }
 
-    public Teacher save(Teacher teacher)
-    {
-        DataHolder.teachers
-                .removeIf(
-                        i -> i.getName().equals(teacher.getName())
-                                && i.getSurname().equals(teacher.getSurname()));
-        DataHolder.teachers.add(teacher);
-        return teacher;
+    public Optional<Teacher> findById(Long id){
+        return DataHolder.teachers.stream().filter(i-> i.getId().equals(id)).findFirst();
     }
 
-    public void deleteById(Long id)
-    {
-        DataHolder.teachers.removeIf(i -> i.getId().equals(id));
-    }
 }

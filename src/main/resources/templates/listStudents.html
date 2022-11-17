@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Add new Student to Course</title>
-    <style type="text/css">
+    <style>
         body {
             width: 800px;
             margin: auto;
@@ -42,9 +42,8 @@
     <form th:method="POST" th:action="@{/AddStudent}">
         <ul>
             <li style="list-style: none;" th:each="student: ${students}">
-                <input type="radio" name="size" th:value="${student.getUsername()}"/>
-                <label th:text="${student.getUsername()}"> </label>
-
+                <input id="size" type="radio" name="size" th:value="${student.getUsername()}"/>
+                <label for="size" th:text="${student.getUsername()}"> </label>
             </li>
         </ul>
         <input type="submit" value="Submit"/>

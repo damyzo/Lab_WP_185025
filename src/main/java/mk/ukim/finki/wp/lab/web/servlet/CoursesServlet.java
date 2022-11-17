@@ -1,4 +1,4 @@
-package mk.ukim.finki.wp.lab.web;
+package mk.ukim.finki.wp.lab.web.servlet;
 
 
 import mk.ukim.finki.wp.lab.model.Course;
@@ -6,7 +6,6 @@ import mk.ukim.finki.wp.lab.service.CourseService;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,13 +19,13 @@ public class CoursesServlet extends HttpServlet {
     private final CourseService courseService;
     private final SpringTemplateEngine springTemplateEngine;
 
-    public CoursesServlet(CourseService courseService, SpringTemplateEngine springTemplateEngine)throws ServletException, IOException {
+    public CoursesServlet(CourseService courseService, SpringTemplateEngine springTemplateEngine){
         this.courseService = courseService;
         this.springTemplateEngine = springTemplateEngine;
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         WebContext context = new WebContext(req,resp, req.getServletContext());
         List<Course> cours = this.courseService.listAll();
         context.setVariable("coursesList",cours);
@@ -36,9 +35,9 @@ public class CoursesServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String courseId = req.getParameter("courseId");
-        req.getSession().setAttribute("courseSelected",courseId);
-        resp.sendRedirect("/AddStudent");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String courseId = request.getParameter("courseId");
+        request.getSession().setAttribute("courseSelected",courseId);
+        response.sendRedirect(request.getContextPath() + "/AddStudent");
     }
 }
