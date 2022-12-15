@@ -29,7 +29,10 @@ public class CourseSelectionFilter implements Filter {
                 && !path.equals("/courses/add-form")
                 && !path.equals("/courses/add")
                 && !path.matches("/courses/edit-form/[0-9]*")
-                && selection == null){
+                && !path.matches("/h2")
+                && !path.matches("/h2/*")
+                && selection == null
+                ){
             response.sendRedirect("/courses");
         }else {
             if(path.equals("/listCourses") && Objects.equals(request.getMethod(), "GET"))

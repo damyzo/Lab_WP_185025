@@ -4,6 +4,7 @@ import mk.ukim.finki.wp.lab.bootstrap.DataHolder;
 import mk.ukim.finki.wp.lab.model.Course;
 import mk.ukim.finki.wp.lab.model.Student;
 import mk.ukim.finki.wp.lab.model.Teacher;
+import mk.ukim.finki.wp.lab.model.Type;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -40,8 +41,8 @@ public class CourseRepository {
        return null;
     }
 
-    public Course save(String name, String desc, Teacher teacher){
-        Course course = new Course(name,desc,new ArrayList<>(),teacher);
+    public Course save(String name, String desc, Teacher teacher, Type type){
+        Course course = new Course(name,desc,new ArrayList<>(),teacher, type);
         DataHolder.courses.removeIf(i -> i.getName().equals(name));
         DataHolder.courses.add(course);
         return course;

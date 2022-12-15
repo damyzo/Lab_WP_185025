@@ -33,6 +33,7 @@
             <td>Select</td>
             <td>Course name</td>
             <td>Teacher name</td>
+            <td>Course Type</td>
             <td>Course description</td>
             <td>Delete Course</td>
             <td>Edit Course</td>
@@ -46,6 +47,7 @@
             <td><input type="radio" name="courseId" th:value="${course.getCourseId()}"/></td>
             <td><label th:text="${course.getName()}"> </label></td>
             <td><label th:text="${course.getTeacher()}!=null?${course.getTeacher().getName()} + ' ' + ${course.getTeacher().getSurname()}:'No teacher'"> </label></td>
+            <td><label th:text="${course.getType()}"> </label></td>
             <td><label th:text="${course.getDescription()}"> </label></td>
             <td><a th:href="@{'/courses/delete/{id}' (id = ${course.getCourseId()})}"  class="btn btn-danger">Delete</a></td>
             <td><a th:href="@{'/courses/edit-form/{id}' (id = ${course.getCourseId()})}"  class="btn btn-primary">Edit</a></td>

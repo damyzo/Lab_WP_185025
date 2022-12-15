@@ -3,11 +3,14 @@ package mk.ukim.finki.wp.lab.service.impl;
 import mk.ukim.finki.wp.lab.model.Course;
 import mk.ukim.finki.wp.lab.model.Student;
 import mk.ukim.finki.wp.lab.model.Teacher;
+import mk.ukim.finki.wp.lab.model.Type;
 import mk.ukim.finki.wp.lab.model.exception.CourseNameDescriptionAndTeacherNeededException;
 import mk.ukim.finki.wp.lab.model.exception.CourseNotFoundException;
 import mk.ukim.finki.wp.lab.repository.CourseRepository;
 import mk.ukim.finki.wp.lab.repository.StudentRepository;
 import mk.ukim.finki.wp.lab.service.CourseService;
+
+
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -53,12 +56,14 @@ public class CoursesServiceImpl implements CourseService {
     }
 
     @Override
-    public Course save(String name, String desc, Teacher teacher) {
+    public Course save(String name, String desc, Teacher teacher, String type) {
+
         if(name != null && !name.isEmpty()
                 && desc != null && !desc.isEmpty()
-                && teacher != null)
+                && teacher != null
+                && type!= null && !type.isEmpty())
         {
-            return courseRepository.save(name,desc,teacher);
+            return courseRepository.save(name,desc,teacher,Type.valueOf(type));
         }
         throw new CourseNameDescriptionAndTeacherNeededException();
     }

@@ -1,5 +1,6 @@
 package mk.ukim.finki.wp.lab.web.controller;
 
+import mk.ukim.finki.wp.lab.model.Type;
 import mk.ukim.finki.wp.lab.service.CourseService;
 import mk.ukim.finki.wp.lab.service.TeacherService;
 import org.springframework.stereotype.Controller;
@@ -38,17 +39,19 @@ public class CourseController {
     public String getEditCoursePage(@PathVariable Long id, Model model){
         model.addAttribute("course",courseService.findById(id));
         model.addAttribute("teachers", teacherService.findAll());
+        model.addAttribute("types", Type.values());
         return "add-course";
     }
     @GetMapping("/add-form")
     public String getAddCoursePage(Model model){
         model.addAttribute("teachers", teacherService.findAll());
+        model.addAttribute("types", Type.values());
         return "add-course";
     }
 
     @PostMapping("/add")
-    public String saveCourse(@RequestParam String courseName, @RequestParam String courseDesc, @RequestParam Long teacherId){
-        courseService.save(courseName,courseDesc,teacherService.findById(teacherId));
+    public String saveCourse(@RequestParam String courseName, @RequestParam String courseDesc, @RequestParam Long teacherId,@RequestParam String type){
+        courseService.save(courseName,courseDesc,teacherService.findById(teacherId),type);
         return "redirect:/courses/";
     }
 

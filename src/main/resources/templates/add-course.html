@@ -31,6 +31,13 @@
                     <option th:selected="${course}==null?false:(${course.getTeacher()} ==null?false:(${course.getTeacher().getName()}==${teacher.getName()}?true:false))" th:each="teacher:${teachers}" th:value="${teacher.getId()}" th:text="${teacher.getName()}+' '+${teacher.getSurname()}"></option>
                 </select>
             </div>
+                <div class="form-group">
+                    <label for="type"></label>
+                    <select id="type" name="type" class="form-select" >
+                        <option selected>Select Type</option>
+                        <option th:selected="${course}==null?false:(${course.getType()} == null?false:(${course.getType().name()} == ${type.name()}?true:false))" th:each="type:${types}" th:value="${type}" th:text="${type.name()}"></option>
+                    </select>
+                </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Submit"/>
             </div>
