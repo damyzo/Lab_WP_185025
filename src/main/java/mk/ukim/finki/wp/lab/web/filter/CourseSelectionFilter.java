@@ -25,9 +25,11 @@ public class CourseSelectionFilter implements Filter {
 
         if( !path.equals("/courses")
                 && !path.equals("/listCourses")
+                && !path.matches("/courses/listStudents/[0-9]*")
                 && !path.matches("/courses/delete/[0-9]*")
                 && !path.equals("/courses/add-form")
                 && !path.equals("/courses/add")
+                && !path.matches("/courses/*")
                 && !path.matches("/courses/edit-form/[0-9]*")
                 && !path.matches("/h2")
                 && !path.matches("/h2/*")

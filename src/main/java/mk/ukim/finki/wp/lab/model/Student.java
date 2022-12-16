@@ -3,10 +3,7 @@ package mk.ukim.finki.wp.lab.model;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,12 +19,10 @@ public class Student {
     private String name;
     private String surname;
 
-    @ManyToMany(mappedBy = "students")
-    @ToString.Exclude
+    @ManyToMany(mappedBy = "students",fetch = FetchType.EAGER)
     private List<Course> courseList;
 
     @OneToMany(mappedBy = "student")
-    @ToString.Exclude
     private List<Grade> grades;
 
     public Student(String username, String password, String name, String surname) {

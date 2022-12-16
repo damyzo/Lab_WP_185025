@@ -1,89 +1,110 @@
 package mk.ukim.finki.wp.lab.service.impl;
 
-import mk.ukim.finki.wp.lab.model.Course;
-import mk.ukim.finki.wp.lab.model.Student;
-import mk.ukim.finki.wp.lab.model.Teacher;
-import mk.ukim.finki.wp.lab.model.Type;
+import mk.ukim.finki.wp.lab.model.*;
 import mk.ukim.finki.wp.lab.model.exception.CourseNameDescriptionAndTeacherNeededException;
 import mk.ukim.finki.wp.lab.model.exception.CourseNotFoundException;
-import mk.ukim.finki.wp.lab.repository.CourseRepository;
-import mk.ukim.finki.wp.lab.repository.StudentRepository;
+import mk.ukim.finki.wp.lab.model.exception.StudentNotFoundException;
+import mk.ukim.finki.wp.lab.repository.jpa.CourseRepositoryJpa;
+import mk.ukim.finki.wp.lab.repository.jpa.GradeRepositoryJpa;
+import mk.ukim.finki.wp.lab.repository.jpa.StudentRepositoryJpa;
 import mk.ukim.finki.wp.lab.service.CourseService;
 
 
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class CoursesServiceImpl implements CourseService {
-    private final CourseRepository courseRepository;
-    private final StudentRepository studentRepository;
+    private final CourseRepositoryJpa courseRepository;
+    private final StudentRepositoryJpa studentRepository;
 
-    public CoursesServiceImpl(CourseRepository courseRepository, StudentRepository studentRepository) {
+    private final GradeRepositoryJpa gradeRepositoryJpa;
+
+    public CoursesServiceImpl(CourseRepositoryJpa courseRepository, StudentRepositoryJpa studentRepository, GradeRepositoryJpa gradeRepositoryJpa) {
         this.courseRepository = courseRepository;
         this.studentRepository = studentRepository;
+        this.gradeRepositoryJpa = gradeRepositoryJpa;
     }
 
 
     @Override
     public List<Course> listAll() {
-        return courseRepository.findAllCourses();
+        return courseRepository.findAll();
     }
 
     @Override
     public List<Student> listStudentsByCourse(Long courseId) {
-        return courseRepository.findAllStudentByCourse(courseId);
+        Optional<Course> course = courseRepository.findById(courseId);
+        if(course.isEmpty())
+        {
+            throw new CourseNotFoundException(courseId);
+        }
+        return course.get().getStudents();
     }
 
     @Override
+    @Transactional
     public Course addStudentInCourse(String username, Long courseId) {
-        Student student = null;
-        Course course = courseRepository.findById(courseId);
-        for (Student student1: studentRepository.findAllStudents())
+
+        Optional<Course> course = courseRepository.findById(courseId);
+        Optional<Student> student = studentRepository.findById(username);
+        if(course.isEmpty())
         {
-            if (Objects.equals(student1.getUsername(), username))
-            {
-                student = student1;
-                break;
-            }
+            throw new CourseNotFoundException(courseId);
+        }
+        if(student.isEmpty()){
+            throw new StudentNotFoundException(username);
+        }
+        if(!course.get().getStudents().contains(student.get()))
+        {
+            course.get().getStudents().add(student.get());
+            gradeRepositoryJpa.save(new Grade(null,student.get(),course.get(),null));
         }
 
-        courseRepository.addStudentToCourse(student,course);
-        return course;
+        return course.get();
     }
 
     @Override
+    @Transactional
     public Course save(String name, String desc, Teacher teacher, String type) {
 
         if(name != null && !name.isEmpty()
                 && desc != null && !desc.isEmpty()
-                && teacher != null
                 && type!= null && !type.isEmpty())
         {
-            return courseRepository.save(name,desc,teacher,Type.valueOf(type));
+            courseRepository.deleteByName(name);
+            return courseRepository.save(new Course(name,desc,new ArrayList<>(),teacher,Type.valueOf(type)));
         }
         throw new CourseNameDescriptionAndTeacherNeededException();
     }
 
     @Override
+    @Transactional
     public boolean deleteById(Long id) {
-        return courseRepository.deleteById(id);
+        if(courseRepository.findById(id).isPresent())
+        {
+            courseRepository.deleteByCourseId(id);
+            return true;
+        }
+
+        return false;
     }
 
     @Override
     public void sort() {
-        courseRepository.findAllCourses().sort(Comparator.comparing(Course::getName));
+        courseRepository.findAll().sort(Comparator.comparing(Course::getName));
     }
 
     @Override
     public Course findById(Long id) {
-        if(courseRepository.findById(id) != null)
+        if(courseRepository.findById(id).isPresent())
         {
-            return courseRepository.findById(id);
-
+            return courseRepository.findById(id).get();
         }
         throw new CourseNotFoundException(id);
     }

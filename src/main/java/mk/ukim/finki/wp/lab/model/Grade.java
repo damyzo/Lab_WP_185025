@@ -13,8 +13,15 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Entity
 public class Grade {
+    public Grade(Character grade, Student student, Course course, LocalDateTime timestamp) {
+        this.grade = grade;
+        this.student = student;
+        this.course = course;
+        this.timestamp = timestamp;
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Character grade;
 

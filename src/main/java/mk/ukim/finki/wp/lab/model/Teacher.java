@@ -15,7 +15,7 @@ import java.util.Objects;
 @Entity
 public class Teacher {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String surname;
@@ -27,7 +27,6 @@ public class Teacher {
     private List<Course> courseList;
 
     public Teacher(String name, String surname, LocalDate dateOfEmployment) {
-        this.id = (long)(Math.random()*1000);
         this.name = name;
         this.surname = surname;
         this.dateOfEmployment = dateOfEmployment;

@@ -14,12 +14,11 @@ import java.util.Objects;
 @Entity
 public class Course {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long courseId;
     private String name;
     private String description;
-    @ManyToMany
-    @ToString.Exclude
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Student> students;
 
     @ManyToOne
@@ -29,11 +28,9 @@ public class Course {
     private Type type;
 
     @OneToMany(mappedBy = "course")
-    @ToString.Exclude
     private List<Grade> grades;
 
     public Course(String name, String description, List<Student> students, Teacher teacher, Type type) {
-        this.courseId = (long) (Math.random() * 1000);
         this.name = name;
         this.description = description;
         this.students = students;
