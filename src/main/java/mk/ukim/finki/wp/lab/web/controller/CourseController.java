@@ -8,6 +8,7 @@ import mk.ukim.finki.wp.lab.service.CourseService;
 import mk.ukim.finki.wp.lab.service.GradeService;
 import mk.ukim.finki.wp.lab.service.StudentService;
 import mk.ukim.finki.wp.lab.service.TeacherService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -81,33 +82,27 @@ public class CourseController {
 
     @GetMapping("/listStudents/{courseId}")
     public String listAllStudent(@PathVariable Long courseId, Model model){
-
-        List<Student> studentList = courseService.listStudentsByCourse(courseId);
-        List<Grade> grades = new ArrayList<>();
-        for (Student student:studentList) {
-            grades.addAll(student.getGrades().stream().filter(i -> i.getStudent().getUsername().equals(student.getUsername())).toList());
-
-        }
-        model.addAttribute("stu", studentList);
+        model.addAttribute("stu", courseService.listStudentsByCourse(courseId));
         model.addAttribute("courseName",courseService.findById(courseId).getName());
-        model.addAttribute("grades", grades);
+        model.addAttribute("grades", gradeService.findAllByCourse(courseService.findById(courseId)));
         model.addAttribute("gradeValues", GradeEnum.values());
         return "listGrades";
     }
 
     @GetMapping("/addGrade")
-    public String addGrade(@RequestParam Grade grade, Model model)
+    public String addGrade(@RequestParam Long grade, Model model)
     {
-        model.addAttribute("grade", grade);
+
+        model.addAttribute("grade", gradeService.findById(grade));
         model.addAttribute("gradeValues", GradeEnum.values());
         return "add-grade";
     }
     @PostMapping("/addedGrade")
-    public String addedGrade(@RequestParam Long gradeId, @RequestParam String grade,@RequestParam Long courseId, @RequestParam String username, @RequestParam LocalDateTime date)
+    public String addedGrade(@RequestParam Long gradeId, @RequestParam String grade,@RequestParam Long courseId, @RequestParam String username, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime date)
     {
-        Grade gradeO = gradeService.save(gradeId,grade,courseId,studentService.findByUsername(username),date);
+        gradeService.save(gradeId,grade,courseId,studentService.findByUsername(username),date);
 
-        return "redirect:/courses/listStudents/"+gradeO.getCourse().getCourseId().toString();
+        return "redirect:/courses";
     }
 
 

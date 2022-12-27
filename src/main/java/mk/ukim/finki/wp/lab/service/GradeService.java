@@ -12,4 +12,5 @@ public interface GradeService {
     Grade findByCourseAndStudent(Course course, Student student);
 
     Grade save(Long gradeId, String grade, Long courseId, Student student, LocalDateTime date);
+    Grade findById(Long id);
 }

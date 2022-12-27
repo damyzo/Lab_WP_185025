@@ -2,6 +2,7 @@ package mk.ukim.finki.wp.lab.model;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -20,6 +21,7 @@ public class Teacher {
     private String name;
     private String surname;
 
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate dateOfEmployment;
 
     @OneToMany(mappedBy = "teacher")

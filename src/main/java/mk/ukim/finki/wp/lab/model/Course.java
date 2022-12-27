@@ -27,7 +27,7 @@ public class Course {
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Grade> grades;
 
     public Course(String name, String description, List<Student> students, Teacher teacher, Type type) {

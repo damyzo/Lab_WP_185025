@@ -22,7 +22,7 @@ public class Student {
     @ManyToMany(mappedBy = "students",fetch = FetchType.EAGER)
     private List<Course> courseList;
 
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<Grade> grades;
 
     public Student(String username, String password, String name, String surname) {

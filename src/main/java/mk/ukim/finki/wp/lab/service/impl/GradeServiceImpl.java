@@ -5,6 +5,7 @@ import mk.ukim.finki.wp.lab.model.Grade;
 import mk.ukim.finki.wp.lab.model.Student;
 import mk.ukim.finki.wp.lab.model.exception.CourseNotFoundException;
 import mk.ukim.finki.wp.lab.model.exception.GradeCannotBeAddedException;
+import mk.ukim.finki.wp.lab.model.exception.GradeNotFoundException;
 import mk.ukim.finki.wp.lab.repository.jpa.CourseRepositoryJpa;
 import mk.ukim.finki.wp.lab.repository.jpa.GradeRepositoryJpa;
 import mk.ukim.finki.wp.lab.service.GradeService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GradeServiceImpl implements GradeService {
@@ -36,7 +38,6 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    @Transactional
     public Grade save(Long gradeId,String grade, Long courseId, Student student, LocalDateTime date) {
         if(grade != null && !grade.isEmpty() && courseId != null && student != null && date != null){
             gradeRepositoryJpa.deleteById(gradeId);
@@ -50,5 +51,14 @@ public class GradeServiceImpl implements GradeService {
         }else{
             throw new GradeCannotBeAddedException();
         }
+    }
+
+    @Override
+    public Grade findById(Long id) {
+        Optional<Grade> grade = gradeRepositoryJpa.findById(id);
+        if(grade.isEmpty()){
+            throw new GradeNotFoundException(id);
+        }
+        return grade.get();
     }
 }

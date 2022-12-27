@@ -13,41 +13,47 @@
 </head>
 <body>
 <header>
-  <h1>Students in Course </h1>
+
 </header>
 <section>
-  <h2><th:block th:text="${courseName}"></th:block></h2>
-  <form th:method="GET" th:action="@{/courses/addGrade}">
-    <table class="table">
-      <tr>
-        <th>Select</th>
-        <th>Name</th>
-        <th>Grade</th>
-      </tr>
-      <tr th:each="grade: ${grades}">
-        <td> <input type="radio" name="grade" th:value="grade"></td>
+  <div class="container">
+    <h1>Students in Course:</h1>
+    <h2><th:block th:text="${courseName}"></th:block></h2>
+    <form th:method="GET" th:action="@{/courses/addGrade}">
+      <table class="table">
+        <tr>
+          <th>Select</th>
+          <th>Name</th>
+          <th>Username</th>
+          <th>Grade</th>
+          <th>Date (yyyy-MM-dd'T'HH:mm:ss)</th>
+        </tr>
+        <tr th:each="grade: ${grades}">
+          <td> <input type="radio" name="grade" th:value="${grade.getId()}"></td>
 
-        <td>
-          <th:block th:text="${grade.getStudent().getName()}"></th:block>
-        </td>
-        <td>
-          <th:block th:text="${grade.getStudent().getUsername()}"></th:block>
-        </td>
-        <td>
-          <select id="grade" name="grade" class="form-select" >
-            <option selected>Select Grade</option>
-            <option th:selected="${grade.getGrade()}==null?false:${gradeV.name().contains(grade.getGrade())}" th:each="gradeV:${gradeValues}" th:value="${gradeV}" th:text="${gradeV.name()}"></option>
-          </select>
-        </td>
-      </tr>
-    </table>
-    <input class="btn btn-primary" type="submit" value="Select Student To Add Grade">
-  </form>
+          <td>
+            <th:block th:text="${grade.getStudent().getName()}"></th:block>
+          </td>
+          <td>
+            <th:block th:text="${grade.getStudent().getUsername()}"></th:block>
+          </td>
+          <td>
+            <th:block th:text="${grade.getGrade()}==null?'Not graded yet.':${grade.getGrade()}" ></th:block>
+          </td>
+          <td>
+            <th:block th:text="${grade.getTimestamp()} == null?'Not graded yet.':${grade.getTimestamp()}"></th:block>
+          </td>
+        </tr>
+      </table>
+      <input class="btn btn-primary" type="submit" value="Select Student To Add Grade">
+    </form>
 
 
-      <br>
+    <br>
 
-  <a class="btn btn-danger" href="/courses">Back</a>
+    <a class="btn btn-danger" href="/courses">Back</a>
+  </div>
+
 </section>
 
 </body>

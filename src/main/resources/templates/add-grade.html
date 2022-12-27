@@ -15,9 +15,9 @@
   <div class="row">
     <div class="col-md-4"></div>
     <div class="col-md-4">
-      <form th:method="GET" th:action="@{/courses/addedGrade}">
+      <form th:method="POST" th:action="@{/courses/addedGrade}">
         <div class="form-group">
-          <label for="grade">Grade</label>
+          <label for="grade">Grade Id</label>
           <input th:readonly="${grade.getId()}!=null?true:false" th:value="${grade}!=null?${grade.getId()}:''" name="gradeId" type="text" class="form-control" id="grade">
         </div>
         <div class="form-group">
@@ -25,17 +25,17 @@
           <input th:readonly="true" th:value="${grade}!=null?${grade.getCourse().getCourseId()}:''" name="courseId" type="text" class="form-control" id="courseId" >
         </div>
         <div class="form-group">
-          <label for="username">Course Id</label>
+          <label for="username">Student Username</label>
           <input th:readonly="true" th:value="${grade}!=null?${grade.getStudent().getUsername()}:''" name="username" type="text" class="form-control" id="username" >
         </div>
         <div class="form-group">
-          <label for="date">Course Id</label>
-          <input th:readonly="true" th:value="${grade}!=null?${grade.getTimestamp()}:''" name="date" type="datetime-local" class="form-control" id="date" placeholder="Select Date">
+          <label for="date">Time grade added</label>
+          <input th:value="${grade}!=null?${grade.getTimestamp()}:''" datetime="yyyy-MM-dd'T'HH:mm:ss" name="date" type="datetime-local" class="form-control" id="date" placeholder="Select Date">
         </div>
         <div class="form-group">
           <select id="gradeV" name="grade" class="form-select" >
             <option selected>Select Grade</option>
-            <option th:selected="${grade.getGrade()}==null?false:${gradeV.name().contains(grade.getGrade())}" th:each="gradeV:${gradeValues}" th:value="${gradeV}" th:text="${gradeV.name()}"></option>
+            <option th:selected="${grade.getGrade()}==null?false:${gradeV.name().contains(grade.getGrade().toString())}" th:each="gradeV:${gradeValues}" th:value="${gradeV}" th:text="${gradeV.name()}"></option>
           </select>
         </div>
         <div class="form-group">
