@@ -31,7 +31,7 @@ jobs:
       run: mvn clean package -DskipTests
   build-push-docker-image:
 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
     - name: Set up QEMU
