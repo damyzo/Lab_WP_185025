@@ -15,7 +15,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build-with-maven:
+  build:
 
     runs-on: ubuntu-latest
 
@@ -30,7 +30,7 @@ jobs:
     - name: Build with Maven
       run: mvn clean package -DskipTests
   build-push-docker-image:
-
+    needs: build-with-maven
     runs-on: ubuntu-latest
 
     steps:
