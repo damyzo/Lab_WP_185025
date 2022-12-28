@@ -1,4 +1,7 @@
-FROM openjdk:19-jdk-alpine
-ARG JAR_FILE=*.jar
-COPY ${JAR_FILE} application.jar
-ENTRYPOINT ["java","-jar","/application.jar"]
+FROM eclipse-temurin:17-jdk-jammy
+WORKDIR /app
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
+RUN ./mvnw dependency:resolve
+COPY src ./src
+ENTRYPOINT ["./mvnw","spring-boot:run"]
