@@ -30,6 +30,10 @@ jobs:
     - name: Build with Maven
       run: mvn clean package -DskipTests
   build-push-docker-image:
+
+    runs-on: ubuntu-latest
+
+    steps:
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v2
     - name: Set up Docker Buildx
