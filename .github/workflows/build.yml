@@ -30,7 +30,7 @@ jobs:
     - name: Build with Maven
       run: mvn clean package -DskipTests
   build-push-docker-image:
-    needs: build-with-maven
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
