@@ -21,7 +21,7 @@ public class Teacher {
     private String name;
     private String surname;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfEmployment;
 
     @OneToMany(mappedBy = "teacher")

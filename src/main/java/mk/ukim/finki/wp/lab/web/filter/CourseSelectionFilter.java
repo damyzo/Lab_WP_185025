@@ -24,6 +24,8 @@ public class CourseSelectionFilter implements Filter {
         String path = request.getServletPath();
 
         if( !path.equals("/courses")
+                && !path.equals("/teacherForm")
+                && !path.equals("/addTeacher")
                 && !path.equals("/listCourses")
                 && !path.matches("/courses/listStudents/[0-9]*")
                 && !path.matches("/courses/delete/[0-9]*")

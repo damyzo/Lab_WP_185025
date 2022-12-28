@@ -6,6 +6,7 @@ import mk.ukim.finki.wp.lab.repository.jpa.TeacherRepositoryJpa;
 import mk.ukim.finki.wp.lab.service.TeacherService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -30,9 +31,10 @@ public class TeacherServiceImpl implements TeacherService {
         throw new TeacherNotFoundException(id);
     }
 
-
-
-
+    @Override
+    public Teacher save(String name, String surname, LocalDate dateOfEmployment) {
+        return teacherRepository.save(new Teacher(name,surname,dateOfEmployment));
+    }
 
 
 }
