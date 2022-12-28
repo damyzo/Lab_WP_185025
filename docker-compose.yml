@@ -2,7 +2,7 @@ version: '3'
 
 services:
   app:
-    image: damyzo/kii_project
+    image: damyzo/kii_project:latest
     ports:
       - "8080:8080"
     container_name: app
