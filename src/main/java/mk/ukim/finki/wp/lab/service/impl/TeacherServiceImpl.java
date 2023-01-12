@@ -1,6 +1,7 @@
 package mk.ukim.finki.wp.lab.service.impl;
 
 import mk.ukim.finki.wp.lab.model.Teacher;
+import mk.ukim.finki.wp.lab.model.TeacherFullname;
 import mk.ukim.finki.wp.lab.model.exception.TeacherNotFoundException;
 import mk.ukim.finki.wp.lab.repository.jpa.TeacherRepositoryJpa;
 import mk.ukim.finki.wp.lab.service.TeacherService;
@@ -33,7 +34,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public Teacher save(String name, String surname, LocalDate dateOfEmployment) {
-        return teacherRepository.save(new Teacher(name,surname,dateOfEmployment));
+        return teacherRepository.save(new Teacher(new TeacherFullname(name,surname),dateOfEmployment));
     }
 
 

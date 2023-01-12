@@ -46,7 +46,7 @@
 
             <td><input type="radio" name="courseId" th:value="${course.getCourseId()}"/></td>
             <td><label th:text="${course.getName()}"> </label></td>
-            <td><label th:text="${course.getTeacher()}!=null?${course.getTeacher().getName()} + ' ' + ${course.getTeacher().getSurname()}:'No teacher'"> </label></td>
+            <td><label th:text="${course.getTeacher()}!=null?${course.getTeacher().getTeacherFullname().getName()} + ' ' + ${course.getTeacher().getTeacherFullname().getSurname()}:'No teacher'"> </label></td>
             <td><label th:text="${course.getType()}"> </label></td>
             <td><label th:text="${course.getDescription()}"> </label></td>
             <td><a th:href="@{'/courses/delete/{id}' (id = ${course.getCourseId()})}"  class="btn btn-danger">Delete</a></td>
@@ -59,6 +59,8 @@
       <p class="error"><th:block  th:if="${hasError}" th:text="${error}"></th:block></p>
       <hr>
       <a class="btn btn-lg btn-primary" th:href="@{'/courses/add-form'}">Add new Course</a>
+      <hr>
+      <a class="btn btn-lg btn-primary" th:href="@{'/teacherForm'}">Add Teacher</a>
     </div>
   </div>
 </div>

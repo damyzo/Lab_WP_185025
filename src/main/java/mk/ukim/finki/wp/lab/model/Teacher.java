@@ -1,6 +1,7 @@
 package mk.ukim.finki.wp.lab.model;
 
 import lombok.*;
+import mk.ukim.finki.wp.lab.model.converters.TeacherFullnameConverter;
 import org.hibernate.Hibernate;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -18,8 +19,9 @@ public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String surname;
+
+    @Convert(converter = TeacherFullnameConverter.class)
+    private TeacherFullname teacherFullname;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfEmployment;
@@ -28,9 +30,8 @@ public class Teacher {
     @ToString.Exclude
     private List<Course> courseList;
 
-    public Teacher(String name, String surname, LocalDate dateOfEmployment) {
-        this.name = name;
-        this.surname = surname;
+    public Teacher(TeacherFullname teacherFullname, LocalDate dateOfEmployment) {
+        this.teacherFullname = teacherFullname;
         this.dateOfEmployment = dateOfEmployment;
     }
 

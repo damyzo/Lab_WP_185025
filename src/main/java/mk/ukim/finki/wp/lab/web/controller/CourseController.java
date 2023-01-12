@@ -1,8 +1,5 @@
 package mk.ukim.finki.wp.lab.web.controller;
-
-import mk.ukim.finki.wp.lab.model.Grade;
 import mk.ukim.finki.wp.lab.model.GradeEnum;
-import mk.ukim.finki.wp.lab.model.Student;
 import mk.ukim.finki.wp.lab.model.Type;
 import mk.ukim.finki.wp.lab.service.CourseService;
 import mk.ukim.finki.wp.lab.service.GradeService;
@@ -15,8 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Controller
 @RequestMapping("/courses")
@@ -66,7 +62,10 @@ public class CourseController {
     }
 
     @PostMapping("/add")
-    public String saveCourse(@RequestParam String courseName, @RequestParam String courseDesc, @RequestParam Long teacherId,@RequestParam String type){
+    public String saveCourse(@RequestParam String courseName,
+                             @RequestParam String courseDesc,
+                             @RequestParam Long teacherId,
+                             @RequestParam String type){
         courseService.save(courseName,courseDesc,teacherService.findById(teacherId),type);
         return "redirect:/courses/";
     }
@@ -98,7 +97,11 @@ public class CourseController {
         return "add-grade";
     }
     @PostMapping("/addedGrade")
-    public String addedGrade(@RequestParam Long gradeId, @RequestParam String grade,@RequestParam Long courseId, @RequestParam String username, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime date)
+    public String addedGrade(@RequestParam Long gradeId,
+                             @RequestParam String grade,
+                             @RequestParam Long courseId,
+                             @RequestParam String username,
+                             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime date)
     {
         gradeService.save(gradeId,grade,courseId,studentService.findByUsername(username),date);
 
