@@ -27,7 +27,7 @@ public class TeacherController {
                       @RequestParam String teacherSurname,
                       @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date){
         teacherService.save(teacherName,teacherSurname,date);
-        return "redirect:listCourses";
+        return "redirect:courses";
 
     }
 }

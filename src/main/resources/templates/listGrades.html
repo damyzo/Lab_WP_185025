@@ -45,7 +45,7 @@
           </td>
         </tr>
       </table>
-      <input class="btn btn-primary" type="submit" value="Select Student To Add Grade">
+      <th:block sec:authorize="hasRole('ROLE_ADMIN')"><input class="btn btn-primary" type="submit" value="Select Student To Add Grade"></th:block>
     </form>
 
 
