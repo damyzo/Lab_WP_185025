@@ -61,8 +61,15 @@
       <th:block sec:authorize="hasRole('ROLE_ADMIN')"> <a class="btn btn-lg btn-primary" th:href="@{'/courses/add-form'}">Add new Course</a></th:block>
       <hr>
       <th:block sec:authorize="hasRole('ROLE_ADMIN')"><a class="btn btn-lg btn-primary" th:href="@{'/teacherForm'}">Add Teacher</a> </th:block>
+      <th:block th:if="${#request.getRemoteUser()!=null}">
       <hr>
       <a class="btn btn-lg btn-primary" th:href="@{'/logout'}">Logout</a>
+      </th:block>
+      <th:block th:if="${#request.getRemoteUser()==null}">
+
+      <hr>
+      <a class="btn btn-lg btn-primary" th:href="@{'/login'}">Login</a>
+      </th:block>
     </div>
   </div>
 </div>
