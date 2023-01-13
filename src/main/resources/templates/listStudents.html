@@ -43,7 +43,8 @@
     <h2>Select the student to enroll:</h2>
     <a class="btn btn-danger" href='/createStudent' type='button'>Create New Student</a> <br/> <br/>
 
-    <form th:method="POST" th:action="@{/AddStudent}">
+    <form th:method="POST" th:action="@{/courses/AddStudent}">
+        <input type="hidden" name="courseId" th:value="${courseId}">
         <ul class="list-group">
             <li style="list-style: none;" th:each="student: ${students}" class="list-group-item">
                 <input id="size" type="radio" name="size" th:value="${student.getUsername()}"/>

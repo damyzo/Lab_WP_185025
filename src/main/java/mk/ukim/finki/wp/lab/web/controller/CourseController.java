@@ -9,7 +9,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 
@@ -46,6 +45,26 @@ public class CourseController {
         model.addAttribute("coursesList", courseService.listAll());
 
         return "listCourses";
+    }
+    @PostMapping("")
+    public String selectCourseToAddStudent(@RequestParam(required = false) String courseId,
+                                           Model model,
+                                            HttpSession session){
+        session.setAttribute("courseId", courseId);
+        model.addAttribute("courseId",courseId);
+
+        model.addAttribute("students", this.studentService.listAll());
+        return "listStudents";
+    }
+
+    @PostMapping("/AddStudent")
+    public String addStudentInCourse(@RequestParam(required = false) String size,
+                                     @RequestParam(required = false) String courseId,
+                                     Model model){
+        model.addAttribute("courseName",this.courseService.addStudentInCourse(size,Long.valueOf(courseId)).getName());
+        model.addAttribute("stu", courseService.listStudentsByCourse(Long.valueOf(courseId)));
+
+        return "studentsInCourse";
     }
     @GetMapping("/edit-form/{id}")
     public String getEditCoursePage(@PathVariable Long id, Model model){
