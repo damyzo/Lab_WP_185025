@@ -16,4 +16,4 @@ ARG DEPENDENCY=/workspace/app/target/dependency
 COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
-ENTRYPOINT ["java","-cp","app:app/lib/*","src/main/java/mk/ukim/finki/wp/lab/Application.java"]
+ENTRYPOINT ["java","-cp","app:app/lib/*","mk/ukim/finki/wp/lab/Application.class"]
