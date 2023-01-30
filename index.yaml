@@ -1,3 +1,14 @@
 apiVersion: v1
-entries: {}
-generated: "2023-01-30T00:45:45.1647714+01:00"
+entries:
+  spring-web-app:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-01-30T00:01:00.783158986Z"
+    description: A Helm chart for Kubernetes
+    digest: adfc88d6a7ac812901fd0205c21e3f5bb61b29d2c93abebceaf93f016e164ce9
+    name: spring-web-app
+    type: application
+    urls:
+    - https://github.com/damyzo/Lab_WP_185025/releases/download/spring-web-app-0.1.0/spring-web-app-0.1.0.tgz
+    version: 0.1.0
+generated: "2023-01-30T00:01:00.783163386Z"
