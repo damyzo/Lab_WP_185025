@@ -2,6 +2,20 @@ apiVersion: v1
 entries:
   spring-web-app:
   - apiVersion: v2
+    appVersion: 1.17.0
+    created: "2023-01-30T14:10:53.97748682Z"
+    dependencies:
+    - name: kube-prometheus-stack
+      repository: '@prometheus-community'
+      version: 44.3.0
+    description: A Helm chart for Kubernetes
+    digest: 118b1b276830aea2d4f71e064417ad4fed9fec303ce016ceab3917d6db2270b5
+    name: spring-web-app
+    type: application
+    urls:
+    - https://github.com/damyzo/Lab_WP_185025/releases/download/spring-web-app-0.2.0/spring-web-app-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
     appVersion: 1.16.0
     created: "2023-01-30T00:01:00.783158986Z"
     description: A Helm chart for Kubernetes
@@ -11,4 +25,4 @@ entries:
     urls:
     - https://github.com/damyzo/Lab_WP_185025/releases/download/spring-web-app-0.1.0/spring-web-app-0.1.0.tgz
     version: 0.1.0
-generated: "2023-01-30T00:01:00.783163386Z"
+generated: "2023-01-30T14:10:53.97749982Z"
